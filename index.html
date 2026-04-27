@@ -1,62 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jaiswal Gypsum</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaiswal Gypsum | Premium Interiors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c5a059; /* Elegant Gold */
+            --dark: #121212;
+            --light: #ffffff;
+            --gray: #1f1f1f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+
+        /* Topbar */
+        .topbar {
+            background: var(--primary);
+            color: var(--dark);
+            text-align: center;
+            padding: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(18, 18, 18, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        header h2 {
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+            font-weight: 400;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: var(--primary);
+            border: none;
+            color: var(--dark);
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #e0b975;
+        }
+
+        /* Services */
+        .services {
+            padding: 80px 10%;
+            text-align: center;
+        }
+
+        .services h2 {
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--gray);
+            padding: 40px 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            color: var(--primary);
+        }
+
+        /* Contact Form */
+        .contact {
+            padding: 80px 10%;
+            background: #0a0a0a;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea {
+            padding: 15px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
 
 <div class="topbar">
-📞 9066417285 | 📧 service@jaiswalgypsum.com | 📍 Lucknow / Kanpur
+    📞 +91 9066417285 | 📧 service@jaiswalgypsum.com | 📍 Lucknow & Kanpur
 </div>
 
 <header>
-<h2>Jaiswal Gypsum</h2>
-<nav>
-<a href="#">Home</a>
-<a href="#services">Services</a>
-<a href="#gallery">Gallery</a>
-<a href="#contact">Contact</a>
-</nav>
+    <h2>Jaiswal Gypsum</h2>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+    </nav>
 </header>
 
 <section class="hero">
-<h1>Gypsum & POP Experts 🏗️</h1>
-<p>False Ceiling | Partition | Interior Work</p>
-<a href="#contact"><button>Get Free Quote</button></a>
+    <h1>Transforming Your Space 🏗️</h1>
+    <p>Premium False Ceilings, POP Designs & Modern Partitions</p>
+    <a href="#contact"><button>GET A FREE QUOTE</button></a>
 </section>
 
 <section id="services" class="services">
-<h2>Our Services</h2>
-<div class="cards">
-<div class="card"><h3>False Ceiling</h3></div>
-<div class="card"><h3>POP Design</h3></div>
-<div class="card"><h3>Partition Work</h3></div>
-<div class="card"><h3>Interior Work</h3></div>
-</div>
-</section>
-
-<section id="gallery" class="gallery">
-<h2>Our Work</h2>
-<p>Project images can be added here</p>
+    <h2>Our Specializations</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>False Ceiling</h3>
+            <p>Modern gypsum and grid ceilings for homes and offices.</p>
+        </div>
+        <div class="card">
+            <h3>POP Design</h3>
+            <p>Elegant Plaster of Paris moldings and artistic finishes.</p>
+        </div>
+        <div class="card">
+            <h3>Partition Work</h3>
+            <p>Durable and stylish dry-wall partitions for better space usage.</p>
+        </div>
+        <div class="card">
+            <h3>Interior Work</h3>
+            <p>Complete interior solutions with high-quality materials.</p>
+        </div>
+    </div>
 </section>
 
 <section id="contact" class="contact">
-<h2>Contact Us</h2>
-<form>
-<input type="text" placeholder="Name">
-<input type="tel" placeholder="Mobile">
-<textarea placeholder="Work Details"></textarea>
-<button>Send</button>
-</form>
+    <h2 style="text-align: center; margin-bottom: 30px;">Let's Build Together</h2>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="tel" placeholder="Mobile Number" required>
+        <textarea rows="5" placeholder="Tell us about your project details..."></textarea>
+        <button type="submit">SEND MESSAGE</button>
+    </form>
 </section>
 
 <a href="https://wa.me/919066417285" class="whatsapp">💬</a>
 
 <footer>
-<p>© 2026 Jaiswal Gypsum</p>
+    <p>© 2026 Jaiswal Gypsum. Quality work you can trust.</p>
 </footer>
 
 </body>
