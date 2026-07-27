@@ -163,7 +163,7 @@
             width: auto;
             display: block;
             object-fit: contain;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,.06));
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .06));
         }
 
         .logo-text {
@@ -362,6 +362,19 @@
             border-color: var(--brass-light);
             color: var(--brass-light);
             background: rgba(176, 124, 51, .08);
+        }
+
+        /* ---- QUOTE BUTTON (hero) ---- */
+        .btn-quote-hero {
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 4px 0 #1a9e4e, var(--shadow-md);
+        }
+
+        .btn-quote-hero:hover {
+            background: #2ee073;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1a9e4e, var(--shadow-sm);
         }
 
         .hero-stats {
@@ -736,7 +749,8 @@
         }
 
         .field input,
-        .field textarea {
+        .field textarea,
+        .field select {
             width: 100%;
             padding: 12px 14px;
             font-family: 'Work Sans', sans-serif;
@@ -749,7 +763,8 @@
         }
 
         .field input:focus,
-        .field textarea:focus {
+        .field textarea:focus,
+        .field select:focus {
             outline: none;
             border-color: var(--brass);
             box-shadow: 0 0 0 3px rgba(176, 124, 51, .15);
@@ -788,6 +803,202 @@
         }
 
         /* ============================================================
+                   QUOTE MODAL
+                   ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn .25s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .modal-box {
+            background: var(--white);
+            max-width: 580px;
+            width: 100%;
+            border-radius: var(--radius);
+            padding: 40px 36px 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--line);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp .3s ease;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #8a8067;
+            transition: color var(--transition), transform var(--transition);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .modal-close:hover {
+            color: var(--ink);
+            transform: rotate(90deg);
+        }
+
+        .modal-box .eyebrow {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .modal-box h2 {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+        }
+
+        .modal-box .sub {
+            color: #5a5344;
+            font-size: .92rem;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .modal-box .field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .modal-box .field-group .field {
+            margin-bottom: 0;
+        }
+
+        .modal-box .field label .req {
+            color: #b07c33;
+            margin-left: 2px;
+        }
+
+        .modal-box .btn-whatsapp-submit {
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 15px 28px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background var(--transition), transform var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 0 #1a9e4e;
+        }
+
+        .modal-box .btn-whatsapp-submit:hover {
+            background: #2ee073;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1a9e4e;
+        }
+
+        .modal-box .btn-whatsapp-submit svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+            flex-shrink: 0;
+        }
+
+        .modal-box .form-footnote {
+            font-size: .7rem;
+            color: #8a8067;
+            text-align: center;
+            margin-top: 14px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* ============================================================
+                   FLOATING QUOTE BUTTON (FAB)
+                   ============================================================ */
+        .quote-fab {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            z-index: 97;
+            background: var(--brass);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 22px 12px 18px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: .88rem;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(176, 124, 51, .35);
+            transition: transform var(--transition), box-shadow var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 253, 248, .15);
+        }
+
+        .quote-fab:hover {
+            transform: scale(1.06) translateY(-2px);
+            box-shadow: 0 12px 36px rgba(176, 124, 51, .5);
+        }
+
+        .quote-fab svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .quote-fab .badge {
+            background: #25D366;
+            color: #fff;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            margin-left: 2px;
+        }
+
+        /* ============================================================
                    WHATSAPP FAB
                    ============================================================ */
         .whatsapp {
@@ -802,7 +1013,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
-            z-index: 99;
+            z-index: 96;
             transition: transform var(--transition), box-shadow var(--transition);
             text-decoration: none;
         }
@@ -824,7 +1035,7 @@
         .back-top {
             position: fixed;
             bottom: 98px;
-            right: 30px;
+            right: 98px;
             width: 46px;
             height: 46px;
             border-radius: 50%;
@@ -833,7 +1044,7 @@
             border: 1px solid var(--brass);
             font-size: 1.2rem;
             cursor: pointer;
-            z-index: 98;
+            z-index: 95;
             opacity: 0;
             visibility: hidden;
             transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
@@ -942,6 +1153,30 @@
             .logo-divider {
                 height: 32px;
             }
+            .back-top {
+                right: 20px;
+                bottom: 90px;
+            }
+            .quote-fab {
+                right: 20px;
+                bottom: 92px;
+                padding: 10px 16px 10px 14px;
+                font-size: .78rem;
+            }
+            .quote-fab .badge {
+                font-size: .5rem;
+                padding: 1px 8px;
+            }
+            .modal-box {
+                padding: 32px 24px 28px;
+            }
+            .modal-box .field-group {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .modal-box .field-group .field {
+                margin-bottom: 20px;
+            }
         }
 
         @media (max-width: 720px) {
@@ -1003,6 +1238,38 @@
             }
             .logo-divider {
                 height: 28px;
+            }
+            .back-top {
+                right: 16px;
+                bottom: 84px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .quote-fab {
+                right: 16px;
+                bottom: 86px;
+                padding: 8px 14px 8px 12px;
+                font-size: .7rem;
+                border-radius: 40px;
+            }
+            .quote-fab svg {
+                width: 16px;
+                height: 16px;
+            }
+            .quote-fab .badge {
+                font-size: .45rem;
+                padding: 1px 6px;
+            }
+            .whatsapp {
+                width: 50px;
+                height: 50px;
+                right: 16px;
+                bottom: 22px;
+            }
+            .whatsapp svg {
+                width: 24px;
+                height: 24px;
             }
         }
 
@@ -1073,23 +1340,6 @@
             .info-row .k {
                 width: 100%;
             }
-            .back-top {
-                bottom: 86px;
-                right: 18px;
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            .whatsapp {
-                width: 50px;
-                height: 50px;
-                right: 18px;
-                bottom: 22px;
-            }
-            .whatsapp svg {
-                width: 24px;
-                height: 24px;
-            }
             .logo-img {
                 height: 40px;
             }
@@ -1104,6 +1354,46 @@
             }
             .cross-wrap .cap {
                 font-size: .52rem;
+            }
+            .modal-box {
+                padding: 24px 16px 20px;
+            }
+            .modal-box h2 {
+                font-size: 1.4rem;
+            }
+            .modal-box .btn-whatsapp-submit {
+                font-size: .9rem;
+                padding: 13px 20px;
+            }
+            .back-top {
+                right: 14px;
+                bottom: 78px;
+                width: 36px;
+                height: 36px;
+                font-size: .9rem;
+            }
+            .quote-fab {
+                right: 14px;
+                bottom: 80px;
+                padding: 6px 12px 6px 10px;
+                font-size: .65rem;
+            }
+            .quote-fab svg {
+                width: 14px;
+                height: 14px;
+            }
+            .quote-fab .badge {
+                display: none;
+            }
+            .whatsapp {
+                width: 44px;
+                height: 44px;
+                right: 14px;
+                bottom: 18px;
+            }
+            .whatsapp svg {
+                width: 20px;
+                height: 20px;
             }
         }
 
@@ -1136,6 +1426,15 @@
             .cross-wrap:hover {
                 transform: none !important;
             }
+            .modal-overlay.active {
+                animation: none;
+            }
+            .modal-box {
+                animation: none;
+            }
+            .quote-fab:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -1167,7 +1466,7 @@
             <a href="#process">Process</a>
             <a href="#work">Work</a>
             <a href="#contact">Contact</a>
-            <a href="https://wa.me/919066417285" class="nav-cta" target="_blank" rel="noopener">Get a Quote</a>
+            <a href="javascript:void(0)" class="nav-cta" id="navQuoteBtn">Get a Quote</a>
         </nav>
 
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
@@ -1184,7 +1483,10 @@
             <h1>Every ceiling has <em>layers.</em> We get each one right.</h1>
             <p class="lead">Gypsum board, POP cornice, LED cove, paint finish — Jaiswal Gypsum designs and installs each layer to spec, for homes and offices across Lucknow and Kanpur.</p>
             <div class="hero-actions">
-                <a href="https://wa.me/919066417285" class="btn btn-primary" target="_blank" rel="noopener">Book a free site visit →</a>
+                <a href="javascript:void(0)" class="btn btn-quote-hero" id="heroQuoteBtn">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.2.72-.83.91-1.12.19-.28.38-.23.63-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
+                    Get Quote — Free Site Visit
+                </a>
                 <a href="#work" class="btn btn-ghost">See our work</a>
             </div>
             <div class="hero-stats">
@@ -1399,6 +1701,71 @@
     </section>
 
     <!-- ============================================================
+    QUOTE MODAL
+    ============================================================ -->
+    <div class="modal-overlay" id="quoteModal" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close quote form">✕</button>
+
+            <span class="eyebrow">📋 Get a Quote</span>
+            <h2 id="quoteModalTitle">Tell us about your project</h2>
+            <p class="sub">Fill in your details and we'll send a custom quote to your WhatsApp instantly.</p>
+
+            <form id="quoteForm" novalidate>
+                <div class="field">
+                    <label for="qName">Full name <span class="req">*</span></label>
+                    <input type="text" id="qName" placeholder="e.g. Rajesh Kumar" required autocomplete="name" />
+                </div>
+
+                <div class="field-group">
+                    <div class="field">
+                        <label for="qMobile">Mobile <span class="req">*</span></label>
+                        <input type="tel" id="qMobile" placeholder="10-digit mobile" required autocomplete="tel" />
+                    </div>
+                    <div class="field">
+                        <label for="qCity">City</label>
+                        <select id="qCity">
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Kanpur">Kanpur</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="qArea">Room / area size <span class="req">*</span></label>
+                    <input type="text" id="qArea" placeholder="e.g. 12ft x 15ft living room" required />
+                </div>
+
+                <div class="field">
+                    <label for="qBudget">Rough budget (₹)</label>
+                    <input type="text" id="qBudget" placeholder="e.g. 40,000 – 60,000" />
+                </div>
+
+                <div class="field">
+                    <label for="qDetails">Project details</label>
+                    <textarea id="qDetails" placeholder="Ceiling type, LED cove, POP moulding, partition, timeline, etc." rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn-whatsapp-submit">
+                    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.2.72-.83.91-1.12.19-.28.38-.23.63-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
+                    Send quote request on WhatsApp
+                </button>
+                <p class="form-footnote">🔒 Your details are safe. We reply within a few hours.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    FLOATING QUOTE BUTTON
+    ============================================================ -->
+    <button class="quote-fab" id="quoteFab" aria-label="Get a quote">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.2.72-.83.91-1.12.19-.28.38-.23.63-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
+        Get Quote
+        <span class="badge">Free</span>
+    </button>
+
+    <!-- ============================================================
     WHATSAPP FAB
     ============================================================ -->
     <a href="https://wa.me/919066417285" class="whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
@@ -1425,18 +1792,30 @@
         (function() {
             'use strict';
 
-            // ---- Mobile nav toggle ----
+            // ---- DOM refs ----
             const navToggle = document.getElementById('navToggle');
             const mainNav = document.getElementById('mainNav');
+            const header = document.getElementById('header');
+            const backTop = document.getElementById('backTop');
+            const form = document.getElementById('contactForm');
 
+            // ---- Quote modal ----
+            const modal = document.getElementById('quoteModal');
+            const modalClose = document.getElementById('modalClose');
+            const quoteForm = document.getElementById('quoteForm');
+
+            // ---- openers ----
+            const heroQuoteBtn = document.getElementById('heroQuoteBtn');
+            const navQuoteBtn = document.getElementById('navQuoteBtn');
+            const quoteFab = document.getElementById('quoteFab');
+
+            // ---- Mobile nav ----
             if (navToggle && mainNav) {
                 navToggle.addEventListener('click', function() {
                     const expanded = this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true';
                     this.setAttribute('aria-expanded', expanded);
                     mainNav.classList.toggle('open');
                 });
-
-                // Close nav on link click (mobile)
                 mainNav.querySelectorAll('a').forEach(function(link) {
                     link.addEventListener('click', function() {
                         if (window.innerWidth <= 560) {
@@ -1447,10 +1826,7 @@
                 });
             }
 
-            // ---- Header shadow on scroll ----
-            const header = document.getElementById('header');
-            let lastScroll = 0;
-
+            // ---- Header shadow ----
             window.addEventListener('scroll', function() {
                 const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
                 if (currentScroll > 20) {
@@ -1458,10 +1834,7 @@
                 } else {
                     header.classList.remove('scrolled');
                 }
-                lastScroll = currentScroll;
 
-                // Back to top visibility
-                const backTop = document.getElementById('backTop');
                 if (backTop) {
                     if (currentScroll > 400) {
                         backTop.classList.add('visible');
@@ -1472,15 +1845,121 @@
             }, { passive: true });
 
             // ---- Back to top ----
-            const backTop = document.getElementById('backTop');
             if (backTop) {
                 backTop.addEventListener('click', function() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
 
-            // ---- Contact form ----
-            const form = document.getElementById('contactForm');
+            // ---- Open modal ----
+            function openModal() {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                // focus first input
+                const firstInput = document.getElementById('qName');
+                if (firstInput) setTimeout(function() { firstInput.focus(); }, 100);
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // ---- modal openers ----
+            if (heroQuoteBtn) heroQuoteBtn.addEventListener('click', openModal);
+            if (navQuoteBtn) navQuoteBtn.addEventListener('click', openModal);
+            if (quoteFab) quoteFab.addEventListener('click', openModal);
+
+            // ---- modal close ----
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+
+            // ---- click outside to close ----
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            // ---- Escape key closes modal ----
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                    closeModal();
+                    if (navToggle && mainNav && mainNav.classList.contains('open')) {
+                        mainNav.classList.remove('open');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            // ---- QUOTE FORM: send to WhatsApp ----
+            if (quoteForm) {
+                quoteForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('qName').value.trim();
+                    const mobile = document.getElementById('qMobile').value.trim();
+                    const city = document.getElementById('qCity').value;
+                    const area = document.getElementById('qArea').value.trim();
+                    const budget = document.getElementById('qBudget').value.trim();
+                    const details = document.getElementById('qDetails').value.trim();
+
+                    // validation
+                    if (!name) {
+                        alert('Please enter your full name.');
+                        document.getElementById('qName').focus();
+                        return;
+                    }
+                    if (!mobile) {
+                        alert('Please enter your mobile number.');
+                        document.getElementById('qMobile').focus();
+                        return;
+                    }
+                    const mobileClean = mobile.replace(/\s/g, '');
+                    if (!/^[0-9]{10}$/.test(mobileClean)) {
+                        alert('Please enter a valid 10-digit mobile number.');
+                        document.getElementById('qMobile').focus();
+                        return;
+                    }
+                    if (!area) {
+                        alert('Please tell us the room / area size.');
+                        document.getElementById('qArea').focus();
+                        return;
+                    }
+
+                    // Build message
+                    const line = '──────────────────';
+                    let msg = '🏗️ *NEW QUOTE REQUEST — JAISWAL GYPSUM*' + '\n';
+                    msg += line + '\n';
+                    msg += '👤 *Name:* ' + name + '\n';
+                    msg += '📱 *Mobile:* ' + mobileClean + '\n';
+                    msg += '📍 *City:* ' + city + '\n';
+                    msg += '📐 *Area / Room:* ' + area + '\n';
+                    if (budget) msg += '💰 *Budget:* ₹' + budget + '\n';
+                    if (details) msg += '📝 *Details:* ' + details + '\n';
+                    msg += line + '\n';
+                    msg += '⏳ *Quote requested via website* — please respond at earliest.';
+
+                    // Encode for WhatsApp
+                    const encoded = encodeURIComponent(msg);
+                    const waUrl = 'https://wa.me/919066417285?text=' + encoded;
+
+                    // Open WhatsApp in new tab/window
+                    window.open(waUrl, '_blank');
+
+                    // show a small success feedback
+                    alert('✅ Quote request sent! We\'ll reply on WhatsApp shortly.');
+
+                    // reset form
+                    quoteForm.reset();
+
+                    // close modal after a beat
+                    setTimeout(closeModal, 600);
+                });
+            }
+
+            // ---- Contact form (existing) ----
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -1493,13 +1972,11 @@
                         document.getElementById('userName').focus();
                         return;
                     }
-
                     if (!mobile) {
                         alert('Please enter your mobile number.');
                         document.getElementById('userMobile').focus();
                         return;
                     }
-
                     const mobileClean = mobile.replace(/\s/g, '');
                     if (!/^[0-9]{10}$/.test(mobileClean)) {
                         alert('Please enter a valid 10-digit mobile number.');
@@ -1507,7 +1984,6 @@
                         return;
                     }
 
-                    // Success
                     alert('Thank you ' + name + '! Our team will call you on ' + mobileClean +
                         ' to arrange a free site visit.');
                     form.reset();
@@ -1546,17 +2022,16 @@
                     obs.observe(el);
                 });
             } else {
-                // Fallback: show all
                 reveals.forEach(function(el) {
                     el.classList.add('in');
                 });
             }
 
-            // ---- Keyboard trap for nav toggle (Escape) ----
+            // ---- Keyboard trap for nav toggle ----
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && mainNav && mainNav.classList.contains('open')) {
                     mainNav.classList.remove('open');
-                    navToggle.setAttribute('aria-expanded', 'false');
+                    if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
                     if (navToggle) navToggle.focus();
                 }
             });
