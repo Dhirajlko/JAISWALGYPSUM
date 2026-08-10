@@ -6,6 +6,7 @@
     <title>Jaiswal Gypsum — False Ceiling & POP Design | Lucknow, Kanpur</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         /* ============================================================
@@ -256,6 +257,120 @@
             background: var(--ink);
             transition: var(--transition);
             border-radius: 2px;
+        }
+
+        /* ============================================================
+                   AUTOPLAY AUDIO & VIDEO HERO STYLES
+                   ============================================================ */
+        .autoplay-banner {
+            background: linear-gradient(90deg, #1D1A15 0%, #28241E 100%);
+            border-bottom: 2px solid var(--brass);
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            color: var(--plaster);
+            font-size: .85rem;
+            position: relative;
+            z-index: 99;
+        }
+
+        .audio-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .soundwave {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 18px;
+        }
+        .soundwave span {
+            width: 3px;
+            height: 4px;
+            background: var(--brass-light);
+            border-radius: 2px;
+            transition: height .2s;
+        }
+        .soundwave.active span {
+            animation: wave 1s infinite alternate;
+        }
+        .soundwave.active span:nth-child(1) { animation-delay: .1s; }
+        .soundwave.active span:nth-child(2) { animation-delay: .3s; }
+        .soundwave.active span:nth-child(3) { animation-delay: .2s; }
+        .soundwave.active span:nth-child(4) { animation-delay: .4s; }
+
+        @keyframes wave {
+            0% { height: 4px; }
+            100% { height: 18px; }
+        }
+
+        .audio-btn-pill {
+            background: var(--brass);
+            color: #1D1A15;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: .75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .audio-btn-pill:hover {
+            background: var(--brass-light);
+            transform: scale(1.05);
+        }
+
+        .hero-video-box {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--brass);
+            box-shadow: var(--shadow-lg);
+            background: #000;
+            margin-top: 20px;
+        }
+
+        .hero-video-box video {
+            width: 100%;
+            height: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-control-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            padding: 8px 14px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: .8rem;
+        }
+
+        .video-badge-live {
+            background: #e11d48;
+            color: #fff;
+            font-size: .65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
         }
 
         /* ============================================================
@@ -1442,6 +1557,21 @@
 <body>
 
     <!-- ============================================================
+    AUTOPLAY AUDIO & VIDEO FLOATING BAR
+    ============================================================ -->
+    <div class="autoplay-banner">
+        <div class="audio-status">
+            <div class="soundwave active" id="waveBar">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span><strong>🔊 Jaiswal Gypsum Audio Tour (Hindi Voiceover):</strong> <span id="speechText">Namaskar! Jaiswal Gypsum Lucknow aur Kanpur mein aapka swagat hai...</span></span>
+        </div>
+        <button class="audio-btn-pill" id="toggleAudioBtn">
+            <i class="fa-solid fa-volume-high"></i> <span id="toggleAudioTxt">Pause Voice</span>
+        </button>
+    </div>
+
+    <!-- ============================================================
     TOP BAR
     ============================================================ -->
     <div class="topbar">
@@ -1456,7 +1586,7 @@
     <header id="header">
         <div class="logo-wrap">
             <!-- Logo image – replace "LOGO.jpeg" with your actual logo file -->
-            <img src="LOGO.jpeg" alt="Jaiswal Gypsum" class="logo-img" />
+            <img src="LOGO.jpeg" alt="Jaiswal Gypsum" class="logo-img" onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=100&auto=format';" />
             <span class="logo-divider"></span>
             <span class="logo-text">Jaiswal <em>Gypsum</em></span>
         </div>
@@ -1482,6 +1612,21 @@
             <span class="eyebrow">False Ceiling &amp; POP Specialists — Est. Lucknow</span>
             <h1>Every ceiling has <em>layers.</em> We get each one right.</h1>
             <p class="lead">Gypsum board, POP cornice, LED cove, paint finish — Jaiswal Gypsum designs and installs each layer to spec, for homes and offices across Lucknow and Kanpur.</p>
+            
+            <!-- AUTOPLAY VIDEO BOX IN HERO -->
+            <div class="hero-video-box">
+                <video id="heroVideo" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&auto=format">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-interior-design-41052-large.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+                <div class="video-control-overlay">
+                    <span><span class="video-badge-live">LIVE VIDEO SHOWCASE</span> Gypsum Board &amp; LED Cove Installation</span>
+                    <button class="audio-btn-pill" id="videoSoundBtn" style="padding:4px 10px; font-size:0.7rem;">
+                        <i class="fa-solid fa-volume-xmark"></i> Unmute Video
+                    </button>
+                </div>
+            </div>
+
             <div class="hero-actions">
                 <a href="javascript:void(0)" class="btn btn-quote-hero" id="heroQuoteBtn">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.2.72-.83.91-1.12.19-.28.38-.23.63-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
@@ -1786,11 +1931,106 @@
     </footer>
 
     <!-- ============================================================
-    JAVASCRIPT
+    JAVASCRIPT WITH INSTANT AUTOPLAY AUDIO & VIDEO
     ============================================================ -->
     <script>
         (function() {
             'use strict';
+
+            // ---- AUTOPLAY VIDEO & SPEECH AUDIO LOGIC ----
+            const synth = window.speechSynthesis;
+            const heroVideo = document.getElementById('heroVideo');
+            const videoSoundBtn = document.getElementById('videoSoundBtn');
+            const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+            const toggleAudioTxt = document.getElementById('toggleAudioTxt');
+            const waveBar = document.getElementById('waveBar');
+
+            let isAudioSpeaking = false;
+            let currentUtterance = null;
+
+            const welcomeMsg = "Namaskar! Jaiswal Gypsum Lucknow aur Kanpur mein aapka swagat hai. Hum aapko dete hain high quality Gypsum Board, POP Cornice, aur LED Cove Lighting solutions. Har ceiling ki har layer ko hum perfect tarike se install karte hain.";
+
+            function startSpeechAudio() {
+                if (!synth) return;
+                synth.cancel();
+
+                currentUtterance = new SpeechSynthesisUtterance(welcomeMsg);
+                currentUtterance.lang = 'hi-IN';
+                currentUtterance.rate = 0.95;
+
+                currentUtterance.onstart = function() {
+                    isAudioSpeaking = true;
+                    if (waveBar) waveBar.classList.add('active');
+                    if (toggleAudioTxt) toggleAudioTxt.innerText = "Pause Voice";
+                };
+
+                currentUtterance.onend = function() {
+                    isAudioSpeaking = false;
+                    if (waveBar) waveBar.classList.remove('active');
+                    if (toggleAudioTxt) toggleAudioTxt.innerText = "Replay Voice";
+                };
+
+                currentUtterance.onerror = function() {
+                    isAudioSpeaking = false;
+                    if (waveBar) waveBar.classList.remove('active');
+                    if (toggleAudioTxt) toggleAudioTxt.innerText = "Play Voice";
+                };
+
+                synth.speak(currentUtterance);
+            }
+
+            // Trigger autoplay on DOM load & instant touch/click fallback
+            window.addEventListener('DOMContentLoaded', function() {
+                // Video Autoplay
+                if (heroVideo) {
+                    heroVideo.play().catch(function(err) {
+                        console.log('Video autoplay handled:', err);
+                    });
+                }
+
+                // Audio Speech Autoplay
+                startSpeechAudio();
+            });
+
+            // Instant fallback on first user interaction if browser muted speech autoplay
+            function triggerFirstInteraction() {
+                if (!isAudioSpeaking) {
+                    startSpeechAudio();
+                }
+                document.removeEventListener('click', triggerFirstInteraction);
+                document.removeEventListener('touchstart', triggerFirstInteraction);
+            }
+            document.addEventListener('click', triggerFirstInteraction);
+            document.addEventListener('touchstart', triggerFirstInteraction);
+
+            // Toggle Voice Button
+            if (toggleAudioBtn) {
+                toggleAudioBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (isAudioSpeaking) {
+                        synth.cancel();
+                        isAudioSpeaking = false;
+                        if (waveBar) waveBar.classList.remove('active');
+                        if (toggleAudioTxt) toggleAudioTxt.innerText = "Play Voice";
+                    } else {
+                        startSpeechAudio();
+                    }
+                });
+            }
+
+            // Unmute Video Sound Button
+            if (videoSoundBtn && heroVideo) {
+                videoSoundBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (heroVideo.muted) {
+                        heroVideo.muted = false;
+                        videoSoundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Mute Video';
+                    } else {
+                        heroVideo.muted = true;
+                        videoSoundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Unmute Video';
+                    }
+                });
+            }
 
             // ---- DOM refs ----
             const navToggle = document.getElementById('navToggle');
