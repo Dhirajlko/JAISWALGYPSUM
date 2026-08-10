@@ -1373,8 +1373,7 @@
                 height: 16px;
             }
             .quote-fab .badge {
-                font-size: .45rem;
-                padding: 1px 6px;
+                display: none;
             }
             .whatsapp {
                 width: 50px;
@@ -1637,7 +1636,7 @@
 
             <div class="hero-actions">
                 <a href="javascript:void(0)" class="btn btn-quote-hero" id="heroQuoteBtn">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.44.12.61-.07.17-.2.72-.83.91-1.12.19-.28.38-.23.63-.14.26.09 1.63.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.15L2 22l5.09-1.53a9.87 9.87 0 004.95 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.83 9.83 0 0012.04 2m5.79 14.06c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.02.27-3.43-.72-2.9-1.2-4.76-4.14-4.9-4.34-.14-.2-1.17-1.56-1.17-2.97 0-1.42.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.16-.3.36-.43.49-.14.14-.3.3-.13.58.17.28.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.33 1.44.28.14.46.21.53.33.07.12.07.68-.17 1.36"/></svg>
                     Get Quote — Free Site Visit
                 </a>
                 <a href="#work" class="btn btn-ghost">See our work</a>
@@ -1939,7 +1938,7 @@
     </footer>
 
     <!-- ============================================================
-    JAVASCRIPT WITH INSTANT UNCONDITIONAL AUTOPLAY AUDIO & VIDEO
+    JAVASCRIPT WITH AUTOMATIC AUTOPLAY AUDIO (NO BUTTON CLICK NEEDED)
     ============================================================ -->
     <script>
         (function() {
@@ -1954,17 +1953,24 @@
             const waveBar = document.getElementById('waveBar');
 
             let isAudioSpeaking = false;
+            let audioUnlocked = false;
             const welcomeMsg = "Namaskar! Jaiswal Gypsum Lucknow aur Kanpur mein aapka swagat hai. Hum aapko dete hain high quality Gypsum Board, POP Cornice, aur LED Cove Lighting solutions. Har ceiling ki har layer ko hum perfect tarike se install karte hain.";
 
-            // FORCE SOUND TO PLAY IMMEDIATELY AS WEBSITE OPENS
-            function playAllMediaNow() {
-                // Play MP3 Background Music
-                if (bgAudio && bgAudio.paused) {
+            // AUTOMATIC AUDIO STARTER (NO BUTTON CLICK NEEDED)
+            function startAudioAutomatically() {
+                if (audioUnlocked) return;
+                
+                // 1. Play Background Music Stream
+                if (bgAudio) {
                     bgAudio.volume = 0.7;
-                    bgAudio.play().catch(function(e) { console.log('Audio Autoplay Policy:', e); });
+                    bgAudio.play().then(() => {
+                        audioUnlocked = true;
+                    }).catch(function(err) {
+                        console.log("Waiting for user micro-interaction:", err);
+                    });
                 }
 
-                // Play Hindi Speech Audio
+                // 2. Play Hindi Voiceover Speech Synthesis
                 if (synth && !isAudioSpeaking) {
                     synth.cancel();
                     var utterance = new SpeechSynthesisUtterance(welcomeMsg);
@@ -1973,6 +1979,7 @@
 
                     utterance.onstart = function() {
                         isAudioSpeaking = true;
+                        audioUnlocked = true;
                         if (waveBar) waveBar.classList.add('active');
                         if (toggleAudioTxt) toggleAudioTxt.innerText = "Pause Voice";
                     };
@@ -1986,25 +1993,25 @@
                     synth.speak(utterance);
                 }
 
-                // Play Video
+                // 3. Play Video
                 if (heroVideo && heroVideo.paused) {
-                    heroVideo.play().catch(function(e) { console.log('Video Autoplay:', e); });
+                    heroVideo.play().catch(function(e) {});
                 }
             }
 
-            // Execute immediately on parse
-            playAllMediaNow();
+            // A) Attempt immediately when script parses
+            startAudioAutomatically();
 
-            // Execute on DOM load
-            window.addEventListener('DOMContentLoaded', playAllMediaNow);
-            window.addEventListener('load', playAllMediaNow);
+            // B) Attempt on DOM Load
+            window.addEventListener('DOMContentLoaded', startAudioAutomatically);
+            window.addEventListener('load', startAudioAutomatically);
 
-            // Execute instantly on first mouse movement / touch / scroll (0.001 sec after opening browser tab)
-            ['mousemove', 'pointermove', 'scroll', 'touchstart', 'click'].forEach(function(event) {
-                window.addEventListener(event, playAllMediaNow, { once: true, capture: true });
+            // C) Attempt instantly on first cursor movement / touch / scroll anywhere (triggers sound automatically as user enters page)
+            ['mousemove', 'pointermove', 'scroll', 'mouseenter', 'touchstart', 'focus', 'click'].forEach(function(evt) {
+                window.addEventListener(evt, startAudioAutomatically, { capture: true });
             });
 
-            // Toggle Voice Button
+            // Toggle Voice Button (Manual Pause/Play if user wants)
             if (toggleAudioBtn) {
                 toggleAudioBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -2015,7 +2022,8 @@
                         if (waveBar) waveBar.classList.remove('active');
                         if (toggleAudioTxt) toggleAudioTxt.innerText = "Play Voice";
                     } else {
-                        playAllMediaNow();
+                        audioUnlocked = false;
+                        startAudioAutomatically();
                     }
                 });
             }
