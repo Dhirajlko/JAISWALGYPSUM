@@ -1557,6 +1557,14 @@
 <body>
 
     <!-- ============================================================
+    HTML5 AUDIO PLAYER (EMBEDDED MUSIC LINK)
+    ============================================================ -->
+    <audio id="bgAudio" autoplay loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+        Your browser does not support HTML5 audio.
+    </audio>
+
+    <!-- ============================================================
     AUTOPLAY AUDIO & VIDEO FLOATING BAR
     ============================================================ -->
     <div class="autoplay-banner">
@@ -1613,7 +1621,7 @@
             <h1>Every ceiling has <em>layers.</em> We get each one right.</h1>
             <p class="lead">Gypsum board, POP cornice, LED cove, paint finish — Jaiswal Gypsum designs and installs each layer to spec, for homes and offices across Lucknow and Kanpur.</p>
             
-            <!-- AUTOPLAY VIDEO BOX IN HERO -->
+            <!-- AUTOPLAY VIDEO BOX IN HERO (EMBEDDED MP4 STREAM) -->
             <div class="hero-video-box">
                 <video id="heroVideo" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&auto=format">
                     <source src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-interior-design-41052-large.mp4" type="video/mp4">
@@ -1940,6 +1948,7 @@
             // ---- AUTOPLAY VIDEO & SPEECH AUDIO LOGIC ----
             const synth = window.speechSynthesis;
             const heroVideo = document.getElementById('heroVideo');
+            const bgAudio = document.getElementById('bgAudio');
             const videoSoundBtn = document.getElementById('videoSoundBtn');
             const toggleAudioBtn = document.getElementById('toggleAudioBtn');
             const toggleAudioTxt = document.getElementById('toggleAudioTxt');
@@ -1988,12 +1997,22 @@
                     });
                 }
 
+                // MP3 Audio Autoplay
+                if (bgAudio) {
+                    bgAudio.play().catch(function(err) {
+                        console.log('MP3 Audio autoplay handled:', err);
+                    });
+                }
+
                 // Audio Speech Autoplay
                 startSpeechAudio();
             });
 
-            // Instant fallback on first user interaction if browser muted speech autoplay
+            // Instant fallback on first user interaction if browser muted speech/audio autoplay
             function triggerFirstInteraction() {
+                if (bgAudio && bgAudio.paused) {
+                    bgAudio.play();
+                }
                 if (!isAudioSpeaking) {
                     startSpeechAudio();
                 }
@@ -2009,11 +2028,13 @@
                     e.stopPropagation();
                     if (isAudioSpeaking) {
                         synth.cancel();
+                        if (bgAudio) bgAudio.pause();
                         isAudioSpeaking = false;
                         if (waveBar) waveBar.classList.remove('active');
                         if (toggleAudioTxt) toggleAudioTxt.innerText = "Play Voice";
                     } else {
                         startSpeechAudio();
+                        if (bgAudio) bgAudio.play();
                     }
                 });
             }
